@@ -1,0 +1,386 @@
+/* Custom CSS for additional styling */
+:root {
+    --primary-color: #3B82F6;
+    --secondary-color: #64748B;
+    --accent-color: #14B8A6;
+    --accent-alt-color: #DC2626;
+    --dark-bg: #0F172A;
+    --dark-card: #1E293B;
+    --dark-text: #F1F5F9;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #374151;
+    transition: var(--transition);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Loading spinner */
+#loadingSpinner {
+    transition: opacity 0.3s ease;
+}
+
+/* Navigation styles */
+nav {
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+}
+
+.nav-link {
+    position: relative;
+    transition: var(--transition);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Hero section */
+#home {
+    background: linear-gradient(135deg, #EBF8FF 0%, #E0E7FF 100%);
+}
+
+.dark #home {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
+}
+
+/* Service cards */
+.service-card,
+.team-card {
+    transition: var(--transition);
+    border: 1px solid transparent;
+}
+
+.service-card:hover,
+.team-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-8px);
+}
+
+.service-card:hover .bg-primary\/10,
+.team-card:hover .bg-gradient-to-br {
+    transform: scale(1.1);
+}
+
+/* Team bio reveal */
+.team-bio {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.team-card:hover .team-bio {
+    opacity: 1;
+    max-height: 100px;
+}
+
+/* Service filters */
+.service-filter-btn {
+    background: transparent;
+    color: #6B7280;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.service-filter-btn:hover {
+    color: var(--primary-color);
+}
+
+.service-filter-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Service items */
+.service-item {
+    transition: var(--transition);
+}
+
+.service-item.hidden {
+    display: none;
+}
+
+/* Ticket filters */
+.ticket-filter-btn {
+    background: transparent;
+    color: #6B7280;
+    border: 1px solid #D1D5DB;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.ticket-filter-btn:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.ticket-filter-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Modal styles */
+#authModal {
+    backdrop-filter: blur(5px);
+}
+
+#authModal > div {
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Toast notifications */
+#toast {
+    animation: toastSlideIn 0.3s ease;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Dark mode styles */
+.dark {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+.dark .bg-white {
+    background-color: var(--dark-card);
+}
+
+.dark .bg-gray-50 {
+    background-color: var(--dark-bg);
+}
+
+.dark .border-gray-200 {
+    border-color: #374151;
+}
+
+.dark .border-gray-300 {
+    border-color: #4B5563;
+}
+
+.dark .text-gray-900 {
+    color: var(--dark-text);
+}
+
+.dark .text-gray-600 {
+    color: #D1D5DB;
+}
+
+.dark .text-gray-500 {
+    color: #9CA3AF;
+}
+
+/* Form styles */
+input:focus,
+textarea:focus,
+select:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Button hover effects */
+button {
+    transition: var(--transition);
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Gradient backgrounds */
+.gradient-bg {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+}
+
+/* Card shadows */
+.card-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.card-shadow:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .service-card,
+    .team-card {
+        transform: none;
+    }
+    
+    .service-card:hover,
+    .team-card:hover {
+        transform: none;
+    }
+    
+    .team-bio {
+        opacity: 1;
+        max-height: none;
+    }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2563EB;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: var(--dark-card);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #4B5563;
+}
+
+/* Priority badges */
+.priority-low {
+    background-color: #10B981;
+    color: white;
+}
+
+.priority-medium {
+    background-color: #F59E0B;
+    color: white;
+}
+
+.priority-high {
+    background-color: #EF4444;
+    color: white;
+}
+
+/* Status badges */
+.status-open {
+    background-color: #EF4444;
+    color: white;
+}
+
+.status-in-progress {
+    background-color: #F59E0B;
+    color: white;
+}
+
+.status-resolved {
+    background-color: #10B981;
+    color: white;
+}
+
+/* Ticket card styles */
+.ticket-card {
+    transition: var(--transition);
+    border-left: 4px solid var(--primary-color);
+}
+
+.ticket-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation delays for staggered effects */
+.animate-delay-100 {
+    animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+    animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+    animation-delay: 0.3s;
+}
+
+/* Custom checkbox and radio styles */
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--primary-color);
+}
+
+/* Focus styles for accessibility */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    nav,
+    footer,
+    #authModal,
+    #toast {
+        display: none;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+    
+    .no-print {
+        display: none;
+    }
+}

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticketech Analytics</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#3B82F6',
+                        'secondary': '#64748B',
+                        'accent': '#14B8A6',
+                        'accent-alt': '#DC2626',
+                        'dark-bg': '#0F172A',
+                        'dark-card': '#1E293B',
+                        'dark-text': '#F1F5F9'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter transition-colors duration-300 bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text">
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="fixed inset-0 bg-white dark:bg-dark-bg z-50 flex items-center justify-center">
+        <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/95 dark:bg-dark-bg/95 backdrop-blur-md z-40 border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-primary">Ticke</span><span class="text-primary">Tech</span> <span class="text-primary">Analytics</span></h1>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="nav-link text-gray-900 dark:text-dark-text hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#about" class="nav-link text-gray-900 dark:text-dark-text hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="#contact" class="nav-link text-gray-900 dark:text-dark-text hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                        <a href="#dashboard" id="dashboardLink" class="nav-link text-gray-900 dark:text-dark-text hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors hidden">Dashboard</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    
+                    <!-- Auth Buttons -->
+                    <div id="authButtons" class="flex space-x-2">
+                        <a href="login.html" button id="loginBtn" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">Login</button>
+                    
+                    <!-- User Menu -->
+                    <div id="userMenu" class="relative hidden">
+                        <button id="userMenuBtn" class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            <i class="fas fa-user"></i>
+                            <span id="userEmail"></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-dark-card rounded-md shadow-lg border border-gray-200 dark:border-gray-600 hidden">
+                            <a href="#dashboard" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">Dashboard</a>
+                            <a href="#tickets" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">Submit Ticket</a>
+                            <button id="logoutBtn" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">Logout</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white dark:bg-dark-bg border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="nav-link block px-3 py-2 text-base font-medium text-gray-900 dark:text-dark-text hover:text-primary transition-colors">Home</a>
+                <a href="#about" class="nav-link block px-3 py-2 text-base font-medium text-gray-900 dark:text-dark-text hover:text-primary transition-colors">About</a>
+                <a href="#services" class="nav-link block px-3 py-2 text-base font-medium text-gray-900 dark:text-dark-text hover:text-primary transition-colors">Services</a>
+                <a href="#contact" class="nav-link block px-3 py-2 text-base font-medium text-gray-900 dark:text-dark-text hover:text-primary transition-colors">Contact</a>
+                <a href="#dashboard" id="mobileDashboardLink" class="nav-link block px-3 py-2 text-base font-medium text-gray-900 dark:text-dark-text hover:text-primary transition-colors hidden">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="pt-16">
+        <!-- Home Section -->
+        <section id="home" class="min-h-screen flex items-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-dark-bg dark:to-dark-card">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div data-aos="fade-right">
+                        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-dark-text mb-6">
+                            Organizing Support. <span class="text-primary"><br>Empowering Solutions.</span>
+                        </h1>
+                        <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+                            Smart ticketing solutions for schools, businesses, and tech teams. Simplify issue tracking, streamline requests, and stay organized with real-time updates.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button id="getStartedBtn" class="bg-primary text-white px-8 py-3 rounded-md hover:bg-blue-600 transition-colors font-medium">
+                                Get Started
+                            </button>
+                            <button id="learnMoreBtn" class="border border-primary text-primary px-8 py-3 rounded-md hover:bg-primary hover:text-white transition-colors font-medium">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    <div data-aos="fade-left">
+                        <img src="homepage.jpg" alt="Modern Tech Office" class="rounded-lg shadow-xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Preview -->
+        <section class="py-20 bg-white dark:bg-dark-bg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-dark-text mb-4">Our Core Services</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300">Comprehensive tech solutions for your business needs</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="service-card bg-white dark:bg-dark-card rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-center">
+                            <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-code text-primary text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-4">Web Development</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Custom web applications and responsive websites built with modern technologies.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white dark:bg-dark-card rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-center">
+                            <div class="bg-accent/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-cloud text-accent text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-4">Cloud Support</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Scalable cloud infrastructure and migration services for optimal performance.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white dark:bg-dark-card rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-center">
+                            <div class="bg-accent-alt/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shield-alt text-accent-alt text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-4">Cybersecurity</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Comprehensive security solutions to protect your digital assets and data.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <button id="viewAllServicesBtn" class="bg-primary text-white px-8 py-3 rounded-md hover:bg-blue-600 transition-colors font-medium">
+                        View All Services
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ticketing System Preview -->
+        <section class="py-20 bg-gray-50 dark:bg-dark-card">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-dark-text mb-4">Need Support?</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300">Our ticketing system ensures fast and efficient support for all your needs</p>
+                </div>
+                
+                <div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg p-8 max-w-2xl mx-auto" data-aos="fade-up">
+                    <div class="text-center">
+                        <div class="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-ticket-alt text-primary text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-dark-text mb-4">Submit a Support Ticket</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-8">Get help with Web Development, Cloud Support, Cybersecurity, or any other technical issues.</p>
+                        <button id="submitTicketBtn" class="bg-primary text-white px-8 py-3 rounded-md hover:bg-blue-600 transition-colors font-medium">
+                            Submit Ticket
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-white dark:bg-dark-bg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-dark-text mb-4">About Ticketech Vanguard</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300">Organize, Resolve, Improve</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+                    <div data-aos="fade-right">
+                        <img src="about.jpg" alt="Tech Team" class="rounded-lg shadow-xl">
+                    </div>
+                    <div data-aos="fade-left">
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-dark-text mb-6">Our Mission</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            To simplify request handling and problem resolution through modern ticketing systems that bring speed, structure, and clarity to everyday operations.
+                        </p>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-dark-text mb-6">Our Vision</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            To lead the future of efficient operations by empowering organizations with seamless, intelligent ticketing solutions.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Core Values -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-lightbulb text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-4">Organize</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Bringing structure to chaos by centralizing tickets, tasks, and team communication in one efficient platform.</p>
+                    </div>
+                    
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bg-accent/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-award text-accent text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-4">Resolve</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Ensuring quick and accurate issue resolution through smart workflows and real-time updates.</p>
+                    </div>
+                    
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="bg-accent-alt/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-handshake text-accent-alt text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-4">Improve</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Empowering continuous growth by analyzing patterns, gathering insights, and enhancing team performance over time.</p>
+                    </div>
+                </div>
+                
+                <!-- Team Section -->
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-dark-text mb-4">Meet Our Team</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300">Experienced professionals dedicated to your success</p>
+                </div>
+                
+                <!-- Top Row: 2 Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 place-items-center max-w-2xl mx-auto">
+                    <!-- Jeross -->
+                    <div class="team-card w-full max-w-sm bg-white dark:bg-dark-card rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-24 h-24 bg-gradient-to-br from-primary to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-2">Jeross Tapiador</h3>
+                        <p class="text-primary mb-4">Team Manager / Back-end Developer</p>
+                        <p class="text-gray-600 dark:text-gray-300 team-bio">Leads team coordination and manages server-side systems.</p>
+                    </div>
+
+                    <!-- John Michael -->
+                    <div class="team-card w-full max-w-sm bg-white dark:bg-dark-card rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-24 h-24 bg-gradient-to-br from-accent to-teal-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-2">John Michael Lou Chiong</h3>
+                        <p class="text-accent mb-4">Assistant Project Manager / <br> Full-stack Developer</p>
+                        <p class="text-gray-600 dark:text-gray-300 team-bio">Assists project flow while working on both front-end and back-end tasks.</p>
+                    </div>
+                </div>
+
+                <!-- Bottom Row: 3 Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center">
+                    <!-- June -->
+                    <div class="team-card w-full max-w-sm bg-white dark:bg-dark-card rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-24 h-24 bg-gradient-to-br from-accent-alt to-red-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-2">Princess June Oracion</h3>
+                        <p class="text-accent-alt mb-4">Front-end Developer</p>
+                        <p class="text-gray-600 dark:text-gray-300 team-bio">Builds responsive, user-friendly visual interfaces</p>
+                    </div>
+
+                    <!-- Kris -->
+                    <div class="team-card w-full max-w-sm bg-white dark:bg-dark-card rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-24 h-24 bg-gradient-to-br from-accent-alt to-red-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-2">Kris Elain Togare</h3>
+                        <p class="text-accent-alt mb-4">Front-end Developer</p>
+                        <p class="text-gray-600 dark:text-gray-300 team-bio">Develops interactive, design-driven front-end experiences.</p>
+                    </div>
+
+                    <!-- Aaron -->
+                    <div class="team-card w-full max-w-sm bg-white dark:bg-dark-card rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-24 h-24 bg-yellow-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-2">Bernard Aaron Llauderes</h3>
+                        <p class="text-yellow-500 mb-4">Back-end Developer</p>
+                        <p class="text-gray-600 dark:text-gray-300 team-bio">Handles server logic and database operations for smooth functionality.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-grey-900 dark:text-dark-text mb-4">Get In Touch</h2>
+            <p class="text-xl text-gray-900 dark:text-dark-text mb-4">Ready to transform your business? Let's discuss your project.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Contact Info -->
+            <div data-aos="fade-right">
+                <div class="bg-[#96BBD9] dark:bg-dark-card rounded-2xl shadow-2xl p-10">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-dark-text mb-6">Contact Information</h3>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-white/30 w-12 h-12 rounded-full flex items-center justify-center mr-4 text-primary shadow">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-dark-text">Address</h4>
+                                <p class="text-gray-800 dark:text-gray-300">140 Aguinaldo Hwy, Dasmariñas, Cavite</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-white/30 w-12 h-12 rounded-full flex items-center justify-center mr-4 text-primary shadow">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-dark-text">Phone</h4>
+                                <p class="text-gray-800 dark:text-gray-300">(+63)912-345-6789</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-white/30 w-12 h-12 rounded-full flex items-center justify-center mr-4 text-primary shadow">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-dark-text">Email</h4>
+                                <p class="text-gray-800 dark:text-gray-300">hello@ticketech.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Socials -->
+                    <div class="mt-10">
+                        <h4 class="font-semibold text-gray-900 dark:text-dark-text mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="tooltip bg-white/30 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="tooltip bg-white/30 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="tooltip bg-white/30 w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div data-aos="fade-left">
+                <div class="bg-white dark:bg-dark-card rounded-2xl shadow-2xl p-10">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-dark-text mb-6">Send a Message</h3>
+
+                    <form id="contactForm" class="space-y-6">
+                        <div>
+                            <label for="contactName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Name</label>
+                            <input type="text" id="contactName" name="name" placeholder="Name" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-bg dark:text-dark-text">
+                        </div>
+
+                        <div>
+                            <label for="contactEmail" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Email</label>
+                            <input type="email" id="contactEmail" name="email" placeholder="Email" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-bg dark:text-dark-text">
+                        </div>
+
+                        <div>
+                            <label for="contactMessage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Message</label>
+                            <textarea id="contactMessage" name="message" rows="5" placeholder="Write your message here..." required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-bg dark:text-dark-text"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-primary text-white py-3 px-5 rounded-md hover:bg-blue-700 transition-all font-semibold flex items-center justify-center gap-2">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="py-20 bg-gray-50 dark:bg-dark-card hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-dark-text mb-4">Client Dashboard</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300">Manage your tickets and account</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Profile Card -->
+                    <div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg p-6" data-aos="fade-up">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-4">Profile</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                                <input type="email" id="profileEmail" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-card dark:text-dark-text" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
+                                <input type="text" id="profileName" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-card dark:text-dark-text">
+                            </div>
+                            <button id="updateProfileBtn" class="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
+                                Update Profile
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-4">Quick Actions</h3>
+                        <div class="space-y-4">
+                            <button id="newTicketBtn" class="w-full bg-primary text-white py-3 px-4 rounded-md hover:bg-blue-600 transition-colors flex items-center justify-center">
+                                <i class="fas fa-plus mr-2"></i>
+                                Submit New Ticket
+                            </button>
+                            <button id="viewTicketsBtn" class="w-full border border-primary text-primary py-3 px-4 rounded-md hover:bg-primary hover:text-white transition-colors flex items-center justify-center">
+                                <i class="fas fa-ticket-alt mr-2"></i>
+                                View All Tickets
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text mb-4">Ticket Statistics</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 dark:text-gray-300">Total Tickets</span>
+                                <span id="totalTickets" class="font-semibold text-gray-900 dark:text-dark-text">0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 dark:text-gray-300">Open Tickets</span>
+                                <span id="openTickets" class="font-semibold text-accent-alt">0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 dark:text-gray-300">Resolved Tickets</span>
+                                <span id="resolvedTickets" class="font-semibold text-green-600">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Tickets -->
+                <div class="mt-12">
+                    <div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg p-6" data-aos="fade-up">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-dark-text">Recent Tickets</h3>
+                            <div class="flex space-x-2">
+                                <button class="ticket-filter-btn active px-3 py-1 rounded-md text-sm transition-colors" data-filter="all">All</button>
+                                <button class="ticket-filter-btn px-3 py-1 rounded-md text-sm transition-colors" data-filter="open">Open</button>
+                                <button class="ticket-filter-btn px-3 py-1 rounded-md text-sm transition-colors" data-filter="resolved">Resolved</button>
+                            </div>
+                        </div>
+                        
+                        <div id="ticketsList" class="space-y-4">
+                            <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                                <i class="fas fa-ticket-alt text-4xl mb-4"></i>
+                                <p>No tickets found. Submit your first ticket to get started!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submit Ticket Section -->
+        <section id="tickets" class="py-20 bg-white dark:bg-dark-bg hidden">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-dark-text mb-4">Submit Support Ticket</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300">Get help with your technical issues</p>
+                </div>
+                
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-lg p-8" data-aos="fade-up">
+                    <form id="ticketForm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="ticketCategory" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+                                <select id="ticketCategory" name="category" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-bg dark:text-dark-text">
+                                    <option value="">Select Category</option>
+                                    <option value="web-development">Web Development</option>
+                                    <option value="cloud-support">Cloud Support</option>
+                                    <option value="cybersecurity">Cybersecurity</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="ticketPriority" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Priority</label>
+                                <select id="ticketPriority" name="priority" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-bg dark:text-dark-text">
+                                    <option value="">Select Priority</option>
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="ticketSubject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                            <input type="text" id="ticketSubject" name="subject" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-bg dark:text-dark-text">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="ticketDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
+                            <textarea id="ticketDescription" name="description" rows="6" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-bg dark:text-dark-text"></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" id="cancelTicketBtn" class="border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors">
+                                Submit Ticket
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Authentication Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-dark-card rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="authModalTitle" class="text-2xl font-bold text-gray-900 dark:text-dark-text">Login</h2>
+                <button id="closeAuthModal" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="authTabs" class="flex border-b border-gray-200 dark:border-gray-600 mb-6">
+                <button id="loginTab" class="flex-1 py-2 px-4 text-center border-b-2 border-primary text-primary font-medium">Login</button>
+                <button id="signupTab" class="flex-1 py-2 px-4 text-center border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">Sign Up</button>
+            </div>
+            
+            <form id="authForm">
+                <div class="mb-4">
+                    <label for="authEmail" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    <input type="email" id="authEmail" name="email" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-bg dark:text-dark-text">
+                </div>
+                
+                <div class="mb-6">
+                    <label for="authPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
+                    <input type="password" id="authPassword" name="password" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-dark-bg dark:text-dark-text">
+                </div>
+                
+                <button type="submit" id="authSubmitBtn" class="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors font-medium">
+                    Login
+                </button>
+            </form>
+            
+            <div id="authError" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md hidden"></div>
+        </div>
+    </div>
+
+    <!-- Success/Error Toast -->
+    <div id="toast" class="fixed top-4 right-4 z-50 hidden">
+        <div id="toastContent" class="bg-green-500 text-white px-6 py-3 rounded-md shadow-lg flex items-center space-x-2">
+            <i id="toastIcon" class="fas fa-check-circle"></i>
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-white py-14 font-[Inter]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+
+                <!-- Brand Description -->
+     
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 tracking-tight">
+                        <span class="text-white">Ticke</span><span class="text-primary">Tech</span> <span class="text-primary">Analytics</span>
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed text-base">
+                        We align technology with business strategy to deliver impactful <span class="text-primary font-semibold">solutions</span> that drive results.
+                    </p>
+                </div>
+
+
+                <!-- Services -->
+                <div>
+                    <h4 class="text-xl font-semibold text-white mb-4 uppercase tracking-wide">Services</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-primary transition-colors">Technical Support</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Employee Services</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Client & Customer Support</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Project & Task Management</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="text-xl font-semibold text-white mb-4 uppercase tracking-wide">Company</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#about" class="hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Services</a></li>
+                        <li><a href="#contact" class="hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Socials -->
+                <div>
+                    <h4 class="text-xl font-semibold text-white mb-4 uppercase tracking-wide">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider and Bottom Text -->
+            <div class="border-t border-gray-800 mt-12 pt-6 text-center text-sm text-gray-500">
+                <p>&copy; 2025 <span class="text-white font-semibold">TickeTech Analytics</span>. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="dashboard.js"></script>
+    <script type="module" src="tickets.js"></script>
+    <script type="module" src="contact.js"></script>
+    <script type="module" src="theme.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

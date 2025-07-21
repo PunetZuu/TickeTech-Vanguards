@@ -6,12 +6,10 @@
     <title>TickeTech Analytics Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="loginstyles.css">
-    <link rel="icon" href="Ticketech_fav.png" type="img/png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 </head>
 <body>
 
@@ -36,9 +34,31 @@
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+                    <img src="eye-close.png" id="eyeicon">
                 </div>
+
+                <script>
+
+                    let eyeicon = document.getElementById("eyeicon");
+                    let password = document.getElementById("password");
+
+                    eyeicon.onclick = function(){
+                        if(password.type == "password"){
+                            password.type = "text";
+                            eyeicon.src = "eye-open.png";
+                        }else{
+                            password.type = "password";
+                            eyeicon.src = "eye-close.png";
+                        }
+                    }
+
+
+                </script>
+
                 <button type="submit" class="btn">Sign In</button>
+                
             </form>
+            <a href="index.html" class="btm">Home</a>
             
             <div class="demo-note">
                 Use <strong>admin</strong> / <strong>admin123</strong> for demo access
@@ -57,7 +77,7 @@
                             <i class="fas fa-chart-pie"></i>
                         </div>
                  <div class="brand-text">
-    Ticke<span class="blue-text">Tech</span> <span class="dark-blue-text">Analytics</span>
+    <span class="blue-text">TickeTech</span> <span class="dark-blue-text">Analytics</span>
   </div>
 
                     </div>

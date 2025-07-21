@@ -110,29 +110,6 @@ class App {
         });
     }
 
-    // Setup CTA buttons
-    setupCTAButtons() {
-        const getStartedBtn = document.getElementById('getStartedBtn');
-        const learnMoreBtn = document.getElementById('learnMoreBtn');
-        const viewAllServicesBtn = document.getElementById('viewAllServicesBtn');
-        
-        getStartedBtn?.addEventListener('click', () => {
-            if (authManager.isAuthenticated()) {
-                this.navigateToSection('dashboard');
-            } else {
-                document.getElementById('loginBtn')?.click();
-            }
-        });
-        
-        learnMoreBtn?.addEventListener('click', () => {
-            this.navigateToSection('about');
-        });
-        
-        viewAllServicesBtn?.addEventListener('click', () => {
-            this.navigateToSection('services');
-        });
-    }
-
     // Setup smooth scrolling
     setupSmoothScrolling() {
         const anchors = document.querySelectorAll('a[href^="#"]');

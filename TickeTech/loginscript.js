@@ -601,14 +601,22 @@ function createCharts() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: { y: { beginAtZero: true } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#1c1c1dff' }
+                    },
+                    x: {
+                        ticks: { color: '#1c1c1dff' }
+                    }
+                },
                 plugins: {
                     legend: { display: false },
                     title: {
                         display: true,
                         text: 'Upload data to see visualization',
                         font: { size: 14 },
-                        color: '#6b7280',
+                        color: '#1c1c1dff',
                         position: 'bottom',
                         padding: 20
                     }
@@ -623,14 +631,28 @@ function createCharts() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: { r: { suggestedMin: 0 } },
+                scales: {
+                    r: {
+                        suggestedMin: 0,
+                        ticks: {
+                            color: '#1c1c1dff',
+                            backdropColor: 'transparent'
+                        },
+                        pointLabels: {
+                            color: '#1c1c1dff'
+                        },
+                        grid: {
+                            color: '#555'
+                        }
+                    }
+                },
                 plugins: {
                     legend: { display: false },
                     title: {
                         display: true,
                         text: 'Upload data to see visualization',
                         font: { size: 14 },
-                        color: '#6b7280',
+                        color: '#1c1c1dff',
                         position: 'bottom',
                         padding: 20
                     }
@@ -682,15 +704,37 @@ function createCharts() {
             scales: {
                 y: {
                     beginAtZero: true,
+                    ticks: {
+                        color: '#1c1c1dff'
+                    },
                     title: {
                         display: true,
-                        text: 'Number of Tickets'
+                        text: 'Number of Tickets',
+                        color: '#1c1c1dff'
+                    },
+                    grid: {
+                        color: '#555'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#1c1c1dff'
+                    },
+                    grid: {
+                        color: '#555'
                     }
                 }
             },
             plugins: {
                 legend: {
                     display: false
+                },
+                tooltip: {
+                    backgroundColor: '#222',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    borderColor: '#555',
+                    borderWidth: 1
                 }
             }
         }
@@ -732,16 +776,41 @@ function createCharts() {
             maintainAspectRatio: false,
             scales: {
                 r: {
-                    angleLines: {
-                        display: true
+                    suggestedMin: 0,
+                    ticks: {
+                        color: '#1c1c1dff',
+                        backdropColor: 'transparent'
                     },
-                    suggestedMin: 0
+                    pointLabels: {
+                        color: '#1c1c1dff'
+                    },
+                    grid: {
+                        color: '#555'
+                    },
+                    angleLines: {
+                        color: '#555'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#1c1c1dff'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: '#222',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    borderColor: '#555',
+                    borderWidth: 1
                 }
             }
         }
     });
 }
-
+    
 // Render the entire dashboard
 function renderDashboard() {
     calculateTotals();

@@ -21,7 +21,7 @@
 }
 
 body {
-    background-color:#5284BD;
+    background-color:#344663;
     color: var(--dark);
 }
 
@@ -37,7 +37,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #3D6A9F 0%, #256ec0 100%);
+    background: linear-gradient(135deg, #3D6A9F 0%, #1E293B 100%);
 }
 
 .blue-text {
@@ -74,6 +74,16 @@ body {
 .form-group {
     margin-bottom: 20px;
     text-align: left;
+    position: relative;
+}
+
+.form-group img {
+    width: 26px;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    margin-top: 8px;
+    top: 38px; /* adjust this value to vertically align with the dots */
 }
 
 .form-group label {
@@ -112,6 +122,26 @@ body {
     width: 100%;
 }
 
+.btm {
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+  padding: 14px 28px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.btm:hover {
+    background: var(--primary-dark);
+}
+
 .btn:hover {
     background: var(--primary-dark);
 }
@@ -130,7 +160,7 @@ body {
 
 /* Header */
 .header {
-    background: #C1D3E7;
+    background: #21314b;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     padding: 15px 0;
     position: sticky;
@@ -653,7 +683,8 @@ body {
     color: var(--black);
     font-size: 16px;
     border-top: 1px solid #e2e8f0;
-    background: #C1D3E7;
+
+    background: #8fb7e4;
    font-weight: bold;
 }
 
@@ -696,8 +727,9 @@ body {
 }
 
 .status-success {
-    background-color: rgba(16, 185, 129, 0.1);
-    color: var(--secondary);
+    background-color: rgba(17, 139, 99, 0.973);
+    color: white;
+    font-weight: bolder;
 }
 
 .status-error {

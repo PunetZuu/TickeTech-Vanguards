@@ -155,10 +155,6 @@ class App {
     // Navigate to section
     navigateToSection(sectionId) {
         // Check if section requires authentication
-        if ((sectionId === 'dashboard' || sectionId === 'tickets') && !authManager.isAuthenticated()) {
-            document.getElementById('loginBtn')?.click();
-            return;
-        }
         
         // Hide all sections
         const sections = document.querySelectorAll('main > section');
@@ -232,14 +228,4 @@ const app = new App();
 // Export for use in other modules
 export default app;
 
-// Global error handler
-window.addEventListener('error', (event) => {
-    console.error('Global error:', event.error);
-    authManager.showToast('An unexpected error occurred. Please refresh the page.', 'error');
-});
 
-// Handle unhandled promise rejections
-window.addEventListener('unhandledrejection', (event) => {
-    console.error('Unhandled promise rejection:', event.reason);
-    authManager.showToast('An unexpected error occurred. Please try again.', 'error');
-});

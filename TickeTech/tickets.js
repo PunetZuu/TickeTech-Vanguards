@@ -34,16 +34,6 @@ class TicketManager {
             cancelTicketBtn?.addEventListener('click', () => {
                 this.cancelTicket();
             });
-            
-            // Submit ticket button (from other sections)
-            submitTicketBtn?.addEventListener('click', () => {
-                if (authManager.isAuthenticated()) {
-                    authManager.navigateToSection('tickets');
-                } else {
-                    // Show login modal
-                    document.getElementById('loginBtn').click();
-                }
-            });
         });
     }
 

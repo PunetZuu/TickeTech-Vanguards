@@ -217,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const authForm = document.getElementById('authForm');
     const authModalTitle = document.getElementById('authModalTitle');
     const authSubmitBtn = document.getElementById('authSubmitBtn');
-    const loginBtn = document.getElementById('loginBtn');
     const signupBtn = document.getElementById('signupBtn');
     const closeAuthModal = document.getElementById('closeAuthModal');
     const loginTab = document.getElementById('loginTab');
@@ -226,47 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const userMenuBtn = document.getElementById('userMenuBtn');
     const userDropdown = document.getElementById('userDropdown');
 
-    let isLoginMode = true;
-
-    // Show login modal
-    loginBtn?.addEventListener('click', () => {
-        isLoginMode = true;
-        updateAuthModal();
-        authModal.classList.remove('hidden');
-    });
-
-    // Show signup modal
-    signupBtn?.addEventListener('click', () => {
-        isLoginMode = false;
-        updateAuthModal();
-        authModal.classList.remove('hidden');
-    });
-
-    // Close modal
-    closeAuthModal?.addEventListener('click', () => {
-        authModal.classList.add('hidden');
-        document.getElementById('authError').classList.add('hidden');
-    });
-
-    // Close modal on outside click
-    authModal?.addEventListener('click', (e) => {
-        if (e.target === authModal) {
-            authModal.classList.add('hidden');
-            document.getElementById('authError').classList.add('hidden');
-        }
-    });
-
-    // Login tab
-    loginTab?.addEventListener('click', () => {
-        isLoginMode = true;
-        updateAuthModal();
-    });
-
-    // Signup tab
-    signupTab?.addEventListener('click', () => {
-        isLoginMode = false;
-        updateAuthModal();
-    });
 
     // Update auth modal based on mode
     function updateAuthModal() {

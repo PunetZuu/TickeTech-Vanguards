@@ -386,9 +386,9 @@ function createPdfCharts() {
             datasets: [{
                 label: 'Number of Tickets',
                 data: departments.map(dept => dept.tickets),
-                backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                borderColor: 'rgb(54, 162, 235)',
-                borderWidth: 1
+                backgroundColor: 'rgba(54, 162, 235, 1)',
+                borderColor: 'rgb(54, 162, 235, 1)',
+                borderWidth: 3
             }]
         },
         options: {
@@ -672,28 +672,35 @@ function createCharts() {
                 label: 'Number of Tickets',
                 data: departments.map(dept => dept.tickets),
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(153, 102, 255, 0.7)',
-                    'rgba(255, 159, 64, 0.7)',
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(201, 203, 207, 0.7)',
-                    'rgba(255, 205, 86, 0.7)',
-                    'rgba(75, 192, 115, 0.7)',
-                    'rgba(153, 102, 155, 0.7)',
-                    'rgba(54, 162, 135, 0.7)'
+                    'rgba(54, 162, 235, 1)',   
+                    'rgba(75, 192, 192, 1)',   
+                    'rgba(153, 102, 255, 1)',  
+                    'rgba(255, 159, 64, 1)',   
+                    'rgba(255, 99, 132, 1)',   
+                    'rgba(201, 203, 207, 1)', 
+                    'rgba(255, 205, 86, 1)',   
+                    'rgba(75, 192, 115, 1)',   
+                    'rgba(153, 102, 155, 1)',  
+                    'rgba(255, 112, 194, 1)',  
+                    'rgba(100, 221, 136, 1)',
+                    'rgba(138, 180, 248, 1)', 
+                    'rgba(248, 47, 47, 1)'   
+
                 ],
                 borderColor: [
-                    'rgb(54, 162, 235)',
-                    'rgb(75, 192, 192)',
-                    'rgb(153, 102, 255)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 99, 132)',
-                    'rgb(201, 203, 207)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 115)',
-                    'rgb(153, 102, 155)',
-                    'rgb(54, 162, 135)'
+                    'rgb(54, 162, 235)',   
+                    'rgb(75, 192, 192)',   
+                    'rgb(153, 102, 255)', 
+                    'rgb(255, 159, 64)',   
+                    'rgb(255, 99, 132)',   
+                    'rgb(201, 203, 207)',  
+                    'rgb(255, 205, 86)',   
+                    'rgb(75, 192, 115)',   
+                    'rgb(153, 102, 155)',  
+                    'rgb(255, 112, 194)', 
+                    'rgb(100, 221, 136)',  
+                    'rgb(138, 180, 248)',  
+                    'rgb(248, 47, 47)' 
                 ],
                 borderWidth: 1
             }]
@@ -751,12 +758,13 @@ function createCharts() {
                     label: 'Avg Resolution (hours)',
                     data: departments.map(dept => dept.avgResolution),
                     fill: true,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgb(54, 162, 235)',
-                    pointBackgroundColor: 'rgb(54, 162, 235)',
+                    backgroundColor: 'rgba(232, 235, 54, 0.2)',
+                    borderColor: 'rgb(232, 235, 54)',
+                    borderDash: [3, 2],
+                    pointBackgroundColor: 'rgb(232, 235, 54)',
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(54, 162, 235)'
+                    pointHoverBorderColor: 'rgb(232, 235, 54)'
                 },
                 {
                     label: 'Priority Tickets',
@@ -764,6 +772,7 @@ function createCharts() {
                     fill: true,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
+                    borderDash: [3, 2],
                     pointBackgroundColor: 'rgb(255, 99, 132)',
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',

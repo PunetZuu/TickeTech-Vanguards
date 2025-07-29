@@ -96,7 +96,7 @@
         }
 
         .dark #about {
-            background: linear-gradient(to top right, rgb(39, 136, 226), rgb(7, 19, 41),rgb(7, 19, 41));
+            background: linear-gradient(to top right, rgb(39, 136, 226) , rgb(7, 19, 41) , rgb(7, 19, 41),rgb(7, 19, 41), rgb(39, 136, 226));
         }
 
         /* CONTACT SECTION BACKGROUND CHANGES */
@@ -105,7 +105,8 @@
         }
 
         .dark #contact {
-            background: linear-gradient(to top right, rgb(39, 136, 226), rgb(163, 168, 177),rgb(7, 19, 41));
+            background: linear-gradient(to top right, rgb(39, 136, 226), rgb(7, 19, 41),rgb(7, 19, 41));
+            /* background: linear-gradient(to top right, rgb(39, 136, 226), rgb(163, 168, 177),rgb(7, 19, 41)); */
         }
 
         /* Service cards */
